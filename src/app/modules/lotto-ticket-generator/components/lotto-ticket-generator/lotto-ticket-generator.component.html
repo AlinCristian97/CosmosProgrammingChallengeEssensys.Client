@@ -1,2 +1,45 @@
-<p>lotto-ticket-generator works!</p>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div>
+    <form [formGroup]="ticketGenerationForm">
+      <mat-card fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" style="background-color: whitesmoke;">
+        <mat-card-header>
+          <mat-card-title>Ticket Generation Form</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="width: 300px;">
+          <div fxLayout="column" fxLayoutGap="40px">
+            <div>
+              <mat-form-field style="width: 100%;">
+                <mat-label>Number of boxes</mat-label>
+                <input formControlName="numberOfBoxes" matInput type="number" placeholder="Enter a number">
+                <mat-error *ngIf="ticketGenerationForm.get('numberOfBoxes')?.hasError('required')">
+                  Number of boxes is required.
+                </mat-error>
+                <mat-error *ngIf="ticketGenerationForm.get('numberOfBoxes')?.hasError('invalidRange')">
+                  Number of boxes must be between {{ numberOfBoxesMinValue }} and {{ numberOfBoxesMaxValue }}.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox formControlName="withSuperzahl">Include Superzahl</mat-checkbox>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="column">
+          <button
+          (click)="generateTicket()"
+          mat-raised-button
+          color="accent"
+          [disabled]="!ticketGenerationForm.valid">GENERATE TICKET</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+
 <button routerLink="/home">Take me home</button>

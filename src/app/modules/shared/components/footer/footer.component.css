@@ -1,0 +1,19 @@
+.footer {
+  background-color: #333;
+  color: #fff;
+  min-height: 20vh;
+}
+
+.copyrights {
+  color: gray;
+  font-size: 12px;
+}
+
+.tou {
+  color: slategray;
+}
+
+a:hover {
+  color: lightskyblue;
+  cursor: pointer;
+}

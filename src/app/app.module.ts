@@ -11,6 +11,8 @@ import { SharedModule } from './modules/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+
+    // Angular Material Modules
+    MatButtonModule,
 
     // App modules
     LottoTicketGeneratorModule,

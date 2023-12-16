@@ -17,3 +17,8 @@
   color: lightskyblue;
   cursor: pointer;
 }
+
+.fab:hover {
+  cursor: pointer;
+  color: lightskyblue;
+}

@@ -1,13 +1,15 @@
-<div>
+<div *ngIf="(lottoTickets && lottoTickets.length > 0) === false">
+  <p>There are no tickets generated yet. *button de generare*</p>
+</div>
+<div [hidden]="selectedTicket" *ngIf="lottoTickets && lottoTickets.length > 0">
   <mat-card fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" style="background-color: #f0f0f0;">
     <mat-card-header>
       <mat-card-title>Ticket List</mat-card-title>
     </mat-card-header>
     <mat-card-content style="width: 100%;">
-      <div class="ticket-row" *ngFor="let lt of lottoTickets">
+      <div class="ticket-row" *ngFor="let lt of lottoTickets" (click)="onTicketClicked(lt.id)">
         <p class="ticket-info"><span class="ticket-name">
-          Lotto Ticket #{{ lt.id }} <span>{{ (lt.superzahl !== null && lt.superzahl !== undefined) ? ('(superzahl ' + lt.superzahl + ')') : ('(no superzahl)') }}</span>
-        </span> - <em>generated on {{ lt.createdOn | date: 'medium' }}</em><p>
+          Lotto Ticket #{{ lt.id }} </span><span>{{ (lt.superzahl !== null && lt.superzahl !== undefined) ? ('(superzahl ' + lt.superzahl + ')') : ('(no superzahl)') }}</span> - <em>generated on {{ lt.createdOn | date: 'medium' }}</em><p>
       </div>
     </mat-card-content>
     <mat-card-actions>
@@ -19,6 +21,45 @@
       [pageSize]="pageSize"
       (page)="getServerData($event)"
       ></mat-paginator>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div *ngIf="selectedTicket">
+  <mat-card fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" style="background-color: #f0f0f0;">
+    <mat-card-header>
+      <mat-card-title>
+        <p class="ticket-info"><span class="ticket-name">Lotto Ticket #{{ selectedTicket.id }} </span>
+          <span>{{ (selectedTicket.superzahl !== null && selectedTicket.superzahl !== undefined) ? ('(superzahl ' + selectedTicket.superzahl + ')') : ('(no superzahl)') }}</span>
+           - <em>generated on {{ selectedTicket.createdOn | date: 'medium' }}</em><p>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row" style="height: auto; display: flex; align-items: center; justify-content: center;">
+        <div class="col-2" *ngFor="let box of selectedTicket.boxes;" style="display: flex; align-items: center; justify-content: center; width: auto; height: auto;">
+          <div class="box">
+            <div class="grid-container">
+              <div class="grid-row" *ngFor="let row of box.values.slice(0, 7); let rowIndex = index">
+                <div class="grid-cell" *ngFor="let col of box.values.slice(rowIndex * 7, (rowIndex + 1) * 7); let colIndex = index"
+                [ngClass]="{'selected': box.selectedValues.includes(col)}">
+                  {{ col }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="selectedTicket.superzahl !== null && selectedTicket.superzahl !== undefined">
+        <div style="margin: 20px 0;"></div>
+        <div class="superzahl">
+          <div>
+            <p>Superzahl</p>
+            <p><span class="superzahl-number"><strong>{{ selectedTicket.superzahl }}</strong></span></p>
+          </div>
+        </div>
+      </ng-container>
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="backToTicketList()" mat-flat-button color="primary">Back to list</button>
     </mat-card-actions>
   </mat-card>
 </div>

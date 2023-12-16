@@ -12,6 +12,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 export class LottoTicketsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   
+  public selectedTicket: BackendLottoTicketInterface | null = null;
+
   public lottoTickets: BackendLottoTicketInterface[] = [];
 
   public pageIndex: number = 0;
@@ -74,5 +76,25 @@ export class LottoTicketsComponent implements OnInit, OnDestroy {
     });
   
     this.subscriptions.push(subscription);
+  }
+
+  public onTicketClicked(ticketId: number) {
+    const subscription = this.lottoTicketService.getLottoTicketById(ticketId).subscribe({
+      next: (v) => {
+        // Here we'd do proper success notification
+        this.selectedTicket = v;
+      },
+      error: (e) => {
+        // Here we'd do proper error handling
+        console.error(e);
+      },
+      complete: () => { }
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+  public backToTicketList(): void {
+    this.selectedTicket = null;
   }
 }

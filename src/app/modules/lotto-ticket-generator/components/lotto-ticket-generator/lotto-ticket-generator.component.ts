@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { LottoTicketBoxModel } from '../../models/lotto-ticket-box.model';
 import { LottoTicketModel } from '../../models/lotto-ticket.model';
 import { LottoTicketInterface } from '../../models/lotto-ticket.interface';
+import { LottoTicketService } from '../../services/lotto-ticket.service';
+import { BackendLottoTicketInterface } from '../../models/models-for-backend/backend-lotto-ticket.interface';
+import { BackendLottoTicketModel } from '../../models/models-for-backend/backend-lotto-ticket.model';
+import { BackendLottoTicketBoxInterface } from '../../models/models-for-backend/backend-lotto-ticket-box.interface';
+import { BackendLottoTicketBoxModel } from '../../models/models-for-backend/backend-lotto-ticket-box.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lotto-ticket-generator',
   templateUrl: './lotto-ticket-generator.component.html',
   styleUrls: ['./lotto-ticket-generator.component.css']
 })
-export class LottoTicketGeneratorComponent implements OnInit {
+export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
   public ticketGenerationForm!: FormGroup;
   public readonly numberOfBoxesMinValue: number = 1;
   public readonly numberOfBoxesMaxValue: number = 50;
@@ -19,13 +25,24 @@ export class LottoTicketGeneratorComponent implements OnInit {
 
   public isGenerated: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  private addLottoTicketSubscription: Subscription | undefined;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private lottoTicketService: LottoTicketService
+    ) { }
   
   ngOnInit(): void {
     this.ticketGenerationForm = this.formBuilder.group({
       numberOfBoxes: [1, [Validators.required, this.validateNumberOfBoxes.bind(this)]],
       withSuperzahl: [false]
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.addLottoTicketSubscription) {
+      this.addLottoTicketSubscription.unsubscribe();
+    }
   }
 
   validateNumberOfBoxes(control: AbstractControl): ValidationErrors | null {
@@ -62,8 +79,6 @@ export class LottoTicketGeneratorComponent implements OnInit {
       } else {
         this.ticket = new LottoTicketModel(null, this.boxes);
       }
-
-      console.log('generateTicket', 'this.ticket', this.ticket)
     } else {
       console.error('withSuperzahl is null or undefined');
     }
@@ -74,6 +89,43 @@ export class LottoTicketGeneratorComponent implements OnInit {
   }
 
   public saveTicket(): void {
-    console.log('saving ticket!', 'this.ticket', this.ticket);
+    const ticket = this.ticket;
+
+    if (ticket) {
+      const boxesToAdd: BackendLottoTicketBoxInterface[] = [];
+
+      this.boxes.forEach(b => {
+        const boxToAdd: BackendLottoTicketBoxInterface = new BackendLottoTicketBoxModel(
+          0,
+          new Date(),
+          b.getRows(),
+          b.getCols(),
+          b.getValuesCopy(),
+          b.getSelectedValuesCopy(),
+          b.getSelectedValuesSortedCopy());
+        
+        boxesToAdd.push(boxToAdd);
+      });
+
+      const ticketToAdd: BackendLottoTicketInterface = new BackendLottoTicketModel(boxesToAdd);
+
+      if (ticket.getSuperzahl() !== null || ticket.getSuperzahl() !== undefined) {
+        ticketToAdd.superzahl = ticket.getSuperzahl();
+      }
+
+      this.addLottoTicketSubscription = this.lottoTicketService.addLottoTicket(ticketToAdd).subscribe({
+        next: (v) => {
+          // Here we'd do proper success notification
+          console.log('Ticket Created Successfully', v);
+        },
+        error: (e) => {
+          // Here we'd do proper error handling
+          console.error(e);
+        },
+        complete: () => { }
+      });
+    }
+
+
   }
 }

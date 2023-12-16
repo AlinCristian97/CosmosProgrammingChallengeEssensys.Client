@@ -89,6 +89,8 @@ export class LottoTicketsComponent implements OnInit, OnDestroy {
   }
 
   public onTicketClicked(ticketId: number) {
+    this.isLoading = true;
+
     const subscription = this.lottoTicketService.getLottoTicketById(ticketId).subscribe({
       next: (v) => {
         // Here we'd do proper success notification
@@ -97,8 +99,14 @@ export class LottoTicketsComponent implements OnInit, OnDestroy {
       error: (e) => {
         // Here we'd do proper error handling
         console.error(e);
+        this.isLoading = false;
       },
-      complete: () => { }
+      complete: () => {
+        // Here I added fake waiting time to simulate a real-life scenario where it probably wouldn't be instant speed
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500);
+      }
     });
 
     this.subscriptions.push(subscription);

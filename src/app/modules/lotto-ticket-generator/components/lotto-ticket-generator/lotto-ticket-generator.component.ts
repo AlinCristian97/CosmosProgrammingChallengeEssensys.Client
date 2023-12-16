@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { LottoTicketBoxModel } from '../../models/lotto-ticket-box.model';
 
 @Component({
   selector: 'app-lotto-ticket-generator',
@@ -10,6 +11,22 @@ export class LottoTicketGeneratorComponent implements OnInit {
   public ticketGenerationForm!: FormGroup;
   public readonly numberOfBoxesMinValue: number = 1;
   public readonly numberOfBoxesMaxValue: number = 50;
+  
+  values: number[] = Array.from({ length: 49 }, (_, index) => index + 1);
+
+  public boxes: LottoTicketBoxModel[] = [];
+
+  getRows(): LottoTicketBoxModel[][] {
+    const rows: LottoTicketBoxModel[][] = [];
+
+    for (let i = 0; i < this.boxes.length; i += 6) {
+      rows.push(this.boxes.slice(i, i + 6));
+    }
+     
+    return rows;
+  }
+
+  public isGenerated: boolean = false;
 
   constructor(private formBuilder: FormBuilder) { }
   
@@ -35,6 +52,23 @@ export class LottoTicketGeneratorComponent implements OnInit {
   }
 
   public generateTicket(): void {
+    this.isGenerated = true;
+    this.boxes = [];
 
+    const numberOfBoxesInput: number = this.ticketGenerationForm.get('numberOfBoxes')?.value;
+    if (numberOfBoxesInput && numberOfBoxesInput !== 0) {
+      for (let i: number = 0; i < numberOfBoxesInput; i++) {
+        const boxToAdd: LottoTicketBoxModel = new LottoTicketBoxModel();
+        this.boxes.push(boxToAdd);
+      }
+    }
+  }
+
+  public generateAnotherTicket(): void {
+    this.isGenerated = false;
+  }
+
+  public saveTicket(): void {
+    console.log('saving ticket!');
   }
 }

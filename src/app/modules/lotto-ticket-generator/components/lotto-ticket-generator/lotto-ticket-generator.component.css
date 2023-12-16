@@ -1,0 +1,37 @@
+.generated-ticket-container {
+  background-color: pink;
+  border: 2px solid green;
+}
+
+.box {
+  
+  /* Temporary */
+  width: auto;
+  height: auto;
+  border: 1px solid green;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+}
+
+.selected {
+  background-color: gold;
+}

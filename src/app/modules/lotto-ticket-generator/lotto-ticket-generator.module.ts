@@ -8,14 +8,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { LottoTicketsComponent } from './components/lotto-tickets/lotto-tickets.component';
 
 @NgModule({
   declarations: [
-    LottoTicketGeneratorComponent
+    LottoTicketGeneratorComponent,
+    LottoTicketsComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatFormFieldModule,
     MatCardModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatGridListModule
   ]
 })
 export class LottoTicketGeneratorModule { }

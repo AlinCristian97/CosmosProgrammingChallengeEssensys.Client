@@ -47,16 +47,25 @@
         <div class="col-2" *ngFor="let box of boxes;" style="display: flex; align-items: center; justify-content: center; width: auto; height: auto;">
           <div class="box">
             <div class="grid-container">
-              <div class="grid-row" *ngFor="let row of values.slice(0, 7); let rowIndex = index">
-                <div class="grid-cell" *ngFor="let col of values.slice(rowIndex * 7, (rowIndex + 1) * 7); let colIndex = index"
-                [ngClass]="{'selected': box.getSelectedValues().includes(col)}">
+              <div class="grid-row" *ngFor="let row of box.getValuesCopy().slice(0, 7); let rowIndex = index">
+                <div class="grid-cell" *ngFor="let col of box.getValuesCopy().slice(rowIndex * 7, (rowIndex + 1) * 7); let colIndex = index"
+                [ngClass]="{'selected': box.getSelectedValuesCopy().includes(col)}">
                   {{ col }}
                 </div>
               </div>
-            </div>            
+            </div>
           </div>
         </div>
       </div>
+      <ng-container *ngIf="ticket && ticket.getSuperzahl() !== null && ticket.getSuperzahl() !== undefined">
+        <div style="margin: 20px 0;"></div>
+        <div class="superzahl">
+          <div>
+            <p>Superzahl</p>
+            <p><span class="superzahl-number"><strong>{{ ticket?.getSuperzahl() }}</strong></span></p>
+          </div>
+        </div>
+      </ng-container>
     </mat-card-content>
     <div style="margin: 20px 0;"></div>
     <mat-card-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">

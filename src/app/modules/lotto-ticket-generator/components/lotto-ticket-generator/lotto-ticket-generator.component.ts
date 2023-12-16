@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { LottoTicketBoxModel } from '../../models/lotto-ticket-box.model';
+import { LottoTicketModel } from '../../models/lotto-ticket.model';
+import { LottoTicketInterface } from '../../models/lotto-ticket.interface';
 
 @Component({
   selector: 'app-lotto-ticket-generator',
@@ -11,20 +13,9 @@ export class LottoTicketGeneratorComponent implements OnInit {
   public ticketGenerationForm!: FormGroup;
   public readonly numberOfBoxesMinValue: number = 1;
   public readonly numberOfBoxesMaxValue: number = 50;
-  
-  values: number[] = Array.from({ length: 49 }, (_, index) => index + 1);
 
+  public ticket: LottoTicketInterface | null = null;
   public boxes: LottoTicketBoxModel[] = [];
-
-  getRows(): LottoTicketBoxModel[][] {
-    const rows: LottoTicketBoxModel[][] = [];
-
-    for (let i = 0; i < this.boxes.length; i += 6) {
-      rows.push(this.boxes.slice(i, i + 6));
-    }
-     
-    return rows;
-  }
 
   public isGenerated: boolean = false;
 
@@ -61,6 +52,20 @@ export class LottoTicketGeneratorComponent implements OnInit {
         const boxToAdd: LottoTicketBoxModel = new LottoTicketBoxModel();
         this.boxes.push(boxToAdd);
       }
+    }
+
+    const withSuperzahlInput: boolean = this.ticketGenerationForm.get('withSuperzahl')?.value;
+    if (withSuperzahlInput !== undefined && withSuperzahlInput !== null) {
+      if (withSuperzahlInput === true) {
+        const superzahl: number = Math.floor(Math.random() * 9) + 1;
+        this.ticket = new LottoTicketModel(superzahl, this.boxes);
+      } else {
+        this.ticket = new LottoTicketModel(null, this.boxes);
+      }
+
+      console.log('generateTicket', 'this.ticket', this.ticket)
+    } else {
+      console.error('withSuperzahl is null or undefined');
     }
   }
 

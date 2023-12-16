@@ -14,12 +14,14 @@ export class LottoTicketBoxModel {
     return this.cols;
   }
 
-  getValues(): number[] {
-    return this.values;
+  getValuesCopy(): number[] {
+    const valuesCopy: number[] = [...this.values];
+    return valuesCopy;
   }
 
-  getSelectedValues(): number[] {
-    return this.selectedValues;
+  getSelectedValuesCopy(): number[] {
+    const selectedValuesCopy: number[] = [...this.selectedValues];
+    return selectedValuesCopy;
   }
 
   getSelectedValuesSorted(): number[] {

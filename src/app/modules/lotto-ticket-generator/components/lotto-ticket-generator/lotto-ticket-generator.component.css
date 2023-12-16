@@ -8,7 +8,7 @@
   /* Temporary */
   width: auto;
   height: auto;
-  border: 1px solid green;
+  border: 1px solid indigo;
   padding: 5px;
   margin-bottom: 20px;
 }
@@ -34,4 +34,21 @@
 
 .selected {
   background-color: gold;
+}
+
+.superzahl {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.superzahl-number {
+  display: inline-block;
+  width: 30px; /* Adjust the width and height to your preference */
+  height: 30px;
+  line-height: 30px; /* Equal to the height for vertical centering */
+  text-align: center;
+  border: 1px solid #000; /* You can change the color by replacing #000 with the color of your choice */
+  border-radius: 50%; /* This creates a circular border */
 }

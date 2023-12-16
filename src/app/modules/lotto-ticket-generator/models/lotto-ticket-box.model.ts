@@ -5,31 +5,29 @@ export class LottoTicketBoxModel {
   private cols: number;
   private values: number[];
   private selectedValues: number[];
+  private selectedValuesSorted: number[];
 
-  getRows(): number {
+  public getRows(): number {
     return this.rows;
   }
 
-  getCols(): number {
+  public getCols(): number {
     return this.cols;
   }
 
-  getValuesCopy(): number[] {
+  public getValuesCopy(): number[] {
     const valuesCopy: number[] = [...this.values];
     return valuesCopy;
   }
 
-  getSelectedValuesCopy(): number[] {
+  public getSelectedValuesCopy(): number[] {
     const selectedValuesCopy: number[] = [...this.selectedValues];
     return selectedValuesCopy;
   }
 
-  // TODO: add bool for asc/desc
-  // TODO: also add number[] of sortedvalues to get them directly?
-  getSelectedValuesSorted(): number[] {
-    const selectedValuesCopy = [...this.selectedValues];
-    const sortedValues = selectedValuesCopy.sort((a, b) => a - b);
-    return sortedValues;
+  public getSelectedValuesSortedCopy(): number[] {
+    const selectedValuesSortedCopy: number[] = [...this.selectedValuesSorted];
+    return selectedValuesSortedCopy;
   }
 
   constructor() {
@@ -38,6 +36,7 @@ export class LottoTicketBoxModel {
     this.values = Array.from({ length: (this.rows * this.cols) }, (_, index) => index + 1);
 
     this.selectedValues = this.getRandomSelectedValues();
+    this.selectedValuesSorted = this.sortValues(true);
   }
 
   private getRandomSelectedValues(): number[] {
@@ -52,5 +51,19 @@ export class LottoTicketBoxModel {
     }
 
     return selectedValues;
+  }
+
+  private sortValues(ascending: boolean): number[] {
+    const selectedValuesCopy = [...this.selectedValues];
+
+    let sortedValues: number[];
+
+    if (ascending === true) {
+      sortedValues = selectedValuesCopy.sort((a, b) => a - b);
+    } else {
+      sortedValues = selectedValuesCopy.sort((a, b) => b - a);
+    }
+
+    return sortedValues;
   }
 }

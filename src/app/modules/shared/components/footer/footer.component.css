@@ -13,7 +13,7 @@
   color: slategray;
 }
 
-a:hover {
+.tou a:hover {
   color: lightskyblue;
   cursor: pointer;
 }

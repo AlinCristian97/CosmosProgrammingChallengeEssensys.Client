@@ -16,6 +16,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./lotto-ticket-generator.component.css']
 })
 export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
+  public isLoading: boolean = false;
+
   public ticketGenerationForm!: FormGroup;
   public readonly numberOfBoxesMinValue: number = 1;
   public readonly numberOfBoxesMaxValue: number = 50;
@@ -57,6 +59,8 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
   }
 
   public generateTicket(): void {
+    this.isLoading = true;
+
     this.isGenerated = true;
     this.boxes = [];
 
@@ -79,6 +83,11 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
     } else {
       console.error('withSuperzahl is null or undefined');
     }
+
+    // Here I added fake waiting time to simulate a real-life scenario where it probably wouldn't be instant speed
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
   }
 
   public generateAnotherTicket(): void {
@@ -88,6 +97,8 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
   }
 
   public saveTicket(): void {
+    this.isLoading = true;
+
     const ticket = this.ticket;
 
     if (ticket) {
@@ -122,8 +133,14 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
         error: (e) => {
           // Here we'd do proper error handling
           console.error(e);
+          this.isLoading = false;
         },
-        complete: () => { }
+        complete: () => {
+          // Here I added fake waiting time to simulate a real-life scenario where it probably wouldn't be instant speed
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 500);
+        }
       });
     }
   }

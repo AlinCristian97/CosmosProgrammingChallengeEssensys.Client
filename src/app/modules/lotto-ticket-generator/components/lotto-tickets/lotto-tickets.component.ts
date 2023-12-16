@@ -10,6 +10,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   styleUrls: ['./lotto-tickets.component.css']
 })
 export class LottoTicketsComponent implements OnInit, OnDestroy {
+  public isLoading: boolean = false;
+
   private subscriptions: Subscription[] = [];
   
   public selectedTicket: BackendLottoTicketInterface | null = null;
@@ -63,6 +65,8 @@ export class LottoTicketsComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToPagedLottoTickets(pageIndex: number, pageSize: number): void {
+    this.isLoading = true;
+
     const subscription = this.lottoTicketService.getPagedLottoTickets(pageIndex, pageSize).subscribe({
       next: (v) => {
         // Here we'd do proper success notification
@@ -71,8 +75,14 @@ export class LottoTicketsComponent implements OnInit, OnDestroy {
       error: (e) => {
         // Here we'd do proper error handling
         console.error(e);
+        this.isLoading = false;
       },
-      complete: () => { }
+      complete: () => {
+        // Here I added fake waiting time to simulate a real-life scenario where it probably wouldn't be instant speed
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500);
+      }
     });
   
     this.subscriptions.push(subscription);

@@ -1,5 +1,9 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div *ngIf="(lottoTickets && lottoTickets.length > 0) === false">
-  <p>There are no tickets generated yet. *button de generare*</p>
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="40px">
+    <p>There are no tickets generated yet, but don't worry - you can generate them right away!</p>
+    <button mat-flat-button color="primary" routerLink="/lotto-ticket-generator">Take me to the Lotto Ticket Generator</button>
+  </div>
 </div>
 <div [hidden]="selectedTicket" *ngIf="lottoTickets && lottoTickets.length > 0">
   <mat-card fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" style="background-color: #f0f0f0;">

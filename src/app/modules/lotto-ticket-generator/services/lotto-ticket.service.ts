@@ -15,6 +15,14 @@ export class LottoTicketService {
     return this.http.get<BackendLottoTicketInterface[]>(this.apiUrl + '/LottoTicket/GetAllLottoTickets');
   }
 
+  getLottoTicketsCount(): Observable<number> {
+    return this.http.get<number>(this.apiUrl + '/LottoTicket/GetLottoTicketsCount');
+  }
+
+  getPagedLottoTickets(pageIndex: number, pageSize: number): Observable<BackendLottoTicketInterface[]> {
+    return this.http.get<BackendLottoTicketInterface[]>(this.apiUrl + '/LottoTicket/GetPagedLottoTickets' + `?pageIndex=${pageIndex}&pageSize=${pageSize}`);
+  }
+
   addLottoTicket(lottoTicket: BackendLottoTicketInterface): Observable<BackendLottoTicketInterface> {
     return this.http.post<BackendLottoTicketInterface>(this.apiUrl + '/LottoTicket/AddLottoTicket', lottoTicket);
   }

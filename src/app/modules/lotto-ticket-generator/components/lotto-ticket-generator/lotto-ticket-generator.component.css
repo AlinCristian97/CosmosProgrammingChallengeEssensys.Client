@@ -4,11 +4,9 @@
 }
 
 .box {
-  
-  /* Temporary */
   width: auto;
   height: auto;
-  border: 1px solid indigo;
+  border: 1px dashed indigo;
   padding: 5px;
   margin-bottom: 20px;
 }

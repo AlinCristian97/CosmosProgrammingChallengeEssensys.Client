@@ -106,7 +106,7 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
         boxesToAdd.push(boxToAdd);
       });
 
-      const ticketToAdd: BackendLottoTicketInterface = new BackendLottoTicketModel(boxesToAdd);
+      const ticketToAdd: BackendLottoTicketInterface = new BackendLottoTicketModel(0, new Date(), boxesToAdd);
 
       if (ticket.getSuperzahl() !== null || ticket.getSuperzahl() !== undefined) {
         ticketToAdd.superzahl = ticket.getSuperzahl();

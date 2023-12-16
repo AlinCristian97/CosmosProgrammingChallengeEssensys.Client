@@ -1,0 +1,21 @@
+.ticket-row {
+  width: 100%;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: gold;
+  border-radius: 5px;
+}
+
+.ticket-row:hover {
+  background-color: goldenrod;
+  border: none;
+  cursor: pointer;
+}
+
+.ticket-info {
+  text-align: center;
+}
+
+.ticket-name {
+  font-weight: 500;
+}

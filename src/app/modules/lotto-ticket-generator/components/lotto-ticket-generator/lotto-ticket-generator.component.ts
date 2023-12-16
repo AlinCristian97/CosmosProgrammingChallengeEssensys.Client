@@ -57,7 +57,7 @@ export class LottoTicketGeneratorComponent implements OnInit {
     const withSuperzahlInput: boolean = this.ticketGenerationForm.get('withSuperzahl')?.value;
     if (withSuperzahlInput !== undefined && withSuperzahlInput !== null) {
       if (withSuperzahlInput === true) {
-        const superzahl: number = Math.floor(Math.random() * 9) + 1;
+        const superzahl: number = Math.floor(Math.random() * 10);
         this.ticket = new LottoTicketModel(superzahl, this.boxes);
       } else {
         this.ticket = new LottoTicketModel(null, this.boxes);
@@ -74,6 +74,6 @@ export class LottoTicketGeneratorComponent implements OnInit {
   }
 
   public saveTicket(): void {
-    console.log('saving ticket!');
+    console.log('saving ticket!', 'this.ticket', this.ticket);
   }
 }

@@ -24,6 +24,8 @@ export class LottoTicketBoxModel {
     return selectedValuesCopy;
   }
 
+  // TODO: add bool for asc/desc
+  // TODO: also add number[] of sortedvalues to get them directly?
   getSelectedValuesSorted(): number[] {
     const selectedValuesCopy = [...this.selectedValues];
     const sortedValues = selectedValuesCopy.sort((a, b) => a - b);

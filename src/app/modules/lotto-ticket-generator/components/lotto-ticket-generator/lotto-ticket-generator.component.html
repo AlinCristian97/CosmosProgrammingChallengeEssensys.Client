@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<div *ngIf="isGenerated" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="isGenerated && !isLoading" fxLayout="column" fxLayoutAlign="center center">
   <p style="text-align: center; margin-bottom: 40px;">If you're happy with the results, go ahead and save the ticket! Otherwise, you can always generate a new one :D</p>
   <mat-card style="background-color: #f0f0f0;">
     <mat-card-header fxLayout="column" fxLayoutAlign="center center">

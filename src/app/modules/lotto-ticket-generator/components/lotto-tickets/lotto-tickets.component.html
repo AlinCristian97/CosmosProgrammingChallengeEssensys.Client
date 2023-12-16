@@ -28,7 +28,7 @@
     </mat-card-actions>
   </mat-card>
 </div>
-<div *ngIf="selectedTicket">
+<div *ngIf="selectedTicket && !isLoading">
   <mat-card fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center" style="background-color: #f0f0f0;">
     <mat-card-header>
       <mat-card-title>

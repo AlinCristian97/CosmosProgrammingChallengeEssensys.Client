@@ -54,6 +54,13 @@
 
 .selected {
   background-color: gold;
+  animation-name: selectedNumbersAnimation;
+  animation-duration: 2s;
+}
+
+@keyframes selectedNumbersAnimation {
+  from {background-color: white;}
+  to {background-color: gold;}
 }
 
 .superzahl {

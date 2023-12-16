@@ -9,6 +9,7 @@ import { BackendLottoTicketModel } from '../../models/models-for-backend/backend
 import { BackendLottoTicketBoxInterface } from '../../models/models-for-backend/backend-lotto-ticket-box.interface';
 import { BackendLottoTicketBoxModel } from '../../models/models-for-backend/backend-lotto-ticket-box.model';
 import { Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 
 @Component({
   selector: 'app-lotto-ticket-generator',
@@ -31,7 +32,8 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private lottoTicketService: LottoTicketService
+    private lottoTicketService: LottoTicketService,
+    private notificationService: NotificationService
     ) { }
   
   ngOnInit(): void {
@@ -125,8 +127,7 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
 
       this.addLottoTicketSubscription = this.lottoTicketService.addLottoTicket(ticketToAdd).subscribe({
         next: (v) => {
-          // Here we'd do proper success notification
-          console.log('Ticket Created Successfully', v);
+          this.notificationService.showNotification('The ticket was created successfully!');
 
           this.generateAnotherTicket();
         },

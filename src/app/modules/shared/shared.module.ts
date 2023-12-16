@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     // Angular Material Modules
     MatToolbarModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   exports: [
     NavbarComponent,

@@ -33,15 +33,13 @@ export class LottoTicketGeneratorComponent implements OnInit, OnDestroy {
     ) { }
   
   ngOnInit(): void {
-    
-    this.ticketGenerationForm = this.formBuilder.group({
-      numberOfBoxes: [1, [Validators.required, this.validateNumberOfBoxes.bind(this)]],
-      withSuperzahl: [false]
-    });
+    this.defaultFormValues();
   }
 
   ngOnDestroy(): void {
-    this.defaultFormValues();
+    if (this.addLottoTicketSubscription) {
+      this.addLottoTicketSubscription.unsubscribe();
+    }
   }
 
   validateNumberOfBoxes(control: AbstractControl): ValidationErrors | null {
